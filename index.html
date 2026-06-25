@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar Abdullah — EEE Engineer & ML Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Lato:ital,wght@0,300;0,400;0,700;1,300&family=Cormorant+SC:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --bg2: #f2f0eb;
+    --bg3: #ece9e2;
+    --surface: #ffffff;
+    --surface2: #f5f3ef;
+    --border: rgba(100,90,70,0.12);
+    --accent: #5b47e0;
+    --accent2: #0ea89a;
+    --accent3: #e05b5b;
+    --text: #1a1814;
+    --text2: #6b6558;
+    --text3: #a09890;
+    --glow: rgba(91,71,224,0.08);
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.15;
+  }
+
+  /* Ambient glow bg */
+  .bg-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-glow-1 { width: 600px; height: 600px; background: rgba(91,71,224,0.06); top: -200px; left: -200px; }
+  .bg-glow-2 { width: 500px; height: 500px; background: rgba(14,168,154,0.05); bottom: 10%; right: -150px; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(248,247,244,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant', serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--text2);
+    text-decoration: none;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-links a.active { color: var(--text); font-weight: 700; }
+  .nav-links a.active::after { width: 100%; }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-inner { max-width: 750px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Cormorant', serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .line2 { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.25s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #7060f0; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(91,71,224,0.25); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s 0.5s ease both;
+  }
+  .scroll-line { width: 40px; height: 1px; background: var(--text3); }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to   { opacity:1; transform: translateY(0); }
+  }
+
+  /* CONTAINER */
+  .container { max-width: 1200px; margin: 0 auto; padding: 6rem 4rem; }
+
+  /* SECTION HEADER */
+  .section-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  h2 {
+    font-family: 'Cormorant', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0;
+  }
+
+  /* ABOUT */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--text2);
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .stat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label { font-size: 0.82rem; color: var(--text2); }
+
+  /* SKILLS */
+  #skills { background: var(--bg); }
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.8rem;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .skill-group:hover { border-color: rgba(91,71,224,0.35); transform: translateY(-3px); }
+  .skill-group-title {
+    font-family: 'Cormorant', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.3rem 0.75rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    color: var(--text2);
+    transition: all 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* PROJECTS */
+  #projects { background: var(--bg2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: rgba(91,71,224,0.25); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(100,90,70,0.12); }
+  .project-card:hover::before { opacity: 1; }
+  .project-num {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+  .project-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+  }
+  .project-desc { font-size: 0.88rem; color: var(--text2); margin-bottom: 1.2rem; line-height: 1.6; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .project-tag {
+    background: rgba(91,71,224,0.08);
+    border: 1px solid rgba(91,71,224,0.18);
+    border-radius: 4px;
+    padding: 0.2rem 0.6rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  /* RESEARCH */
+  #research { background: var(--bg); }
+  .research-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .research-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.5rem 2rem;
+    align-items: start;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .research-card:hover { border-color: rgba(14,168,154,0.35); transform: translateX(4px); }
+  .research-icon {
+    width: 44px; height: 44px;
+    background: rgba(14,168,154,0.08);
+    border: 1px solid rgba(14,168,154,0.18);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .research-content {}
+  .research-title {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+  }
+  .research-meta {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    color: var(--accent2);
+    margin-bottom: 0.6rem;
+    letter-spacing: 0.05em;
+  }
+  .research-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.6; }
+
+  /* EDUCATION */
+  #education { background: var(--bg2); }
+  .edu-timeline { position: relative; padding-left: 2rem; }
+  .edu-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .edu-item {
+    position: relative;
+    padding: 0 0 3rem 2.5rem;
+  }
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    left: -0.375rem; top: 8px;
+    width: 10px; height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(91,71,224,0.3);
+  }
+  .edu-year {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .edu-degree {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-style: normal;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+  }
+  .edu-school { color: var(--text2); font-size: 0.92rem; margin-bottom: 0.4rem; }
+  .edu-gpa {
+    display: inline-block;
+    background: rgba(91,71,224,0.07);
+    border: 1px solid rgba(91,71,224,0.18);
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+  }
+
+  /* CONTACT */
+  #contact { background: var(--bg); }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .contact-text { }
+  .contact-text p { color: var(--text2); margin-bottom: 2rem; font-size: 1rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 1rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: all 0.25s;
+    font-size: 0.9rem;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--text); transform: translateX(4px); }
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    background: var(--bg);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .contact-cta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+  .contact-cta h3 {
+    font-family: 'Cormorant', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .contact-cta p { color: var(--text2); font-size: 0.92rem; margin-bottom: 1.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 2rem 4rem;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text3);
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
+  }
+  footer span { color: var(--accent); }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .container { padding: 4rem 1.5rem; }
+    .about-grid, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .hero-scroll { left: 1.5rem; }
+    footer { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">OA<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Available for opportunities
+    </div>
+    <h1>
+      Omar<br>
+      <span class="line2">Abdullah</span>
+    </h1>
+    <p class="hero-desc">
+      Fresh EEE graduate from CUET — focused on renewable energy systems and machine learning to solve real engineering problems.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+      <a href="mailto:omarabdullah.eee@gmail.com" class="btn btn-outline">Get in Touch →</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll to explore
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">01 — About Me</div>
+    <h2>Engineer. Researcher.<br>Problem Solver.</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>I'm a <strong>fresh B.Sc. graduate in Electrical & Electronic Engineering</strong> from Chittagong University of Engineering and Technology (CUET), Class of 2026.</p>
+        <p>My work spans across <strong>power systems, solar energy design, and machine learning</strong> — I love finding the intersection between hardware fundamentals and data-driven intelligence.</p>
+        <p>Beyond academics, I served as <strong>Secretary (Research)</strong> at CUET Career Club, leading event management for Career Fest 2024 and 2025, and have completed industrial training with Bangladesh Navy's CNRD and solar energy simulation programs.</p>
+        <p>I'm actively seeking <strong>research collaborations, internships, and graduate opportunities</strong> in power electronics, renewable energy, or ML-driven engineering systems.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">3.37</div>
+          <div class="stat-label">CGPA out of 4.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">8+</div>
+          <div class="stat-label">Engineering Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Industrial Trainings</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">CUET</div>
+          <div class="stat-label">Class of 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">02 — Technical Skills</div>
+    <h2>Tools &amp; Technologies</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">⟨/⟩ Programming</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">LaTeX</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">◈ ML &amp; Data</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Data Analysis</span>
+          <span class="skill-tag">Data Preprocessing</span>
+          <span class="skill-tag">Statistical Analysis</span>
+          <span class="skill-tag">Google Colab</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">⚡ EEE Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MATLAB</span>
+          <span class="skill-tag">Cadence Virtuoso</span>
+          <span class="skill-tag">PSIM</span>
+          <span class="skill-tag">LTspice</span>
+          <span class="skill-tag">PowerWorld</span>
+          <span class="skill-tag">AutoCAD</span>
+          <span class="skill-tag">mikroC PRO PIC</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">☀ Energy &amp; Sim</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PVsyst</span>
+          <span class="skill-tag">SCAPS-1D</span>
+          <span class="skill-tag">Solar PV Design</span>
+          <span class="skill-tag">Grid-Tie Systems</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">◻ Productivity</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MS Word</span>
+          <span class="skill-tag">MS Excel</span>
+          <span class="skill-tag">PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">◎ Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Bangla (Native)</span>
+          <span class="skill-tag">English (Proficient)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">03 — Projects</div>
+    <h2>Engineering Work</h2>
+    <div class="projects-grid reveal">
+
+      <div class="project-card">
+        <div class="project-num">01</div>
+        <div class="project-title">4-bit Asynchronous Up Counter IC Layout</div>
+        <p class="project-desc">Designed and verified a 4-bit asynchronous up counter in Cadence Virtuoso, achieving zero DRC/RCX errors, passing LVS checks, and validating functionality through post-layout simulation.</p>
+        <div class="project-tags">
+          <span class="project-tag">Cadence Virtuoso</span>
+          <span class="project-tag">IC Layout</span>
+          <span class="project-tag">DRC/LVS</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">02</div>
+        <div class="project-title">Multi-Story Residential Electrical Wiring</div>
+        <p class="project-desc">Developed comprehensive electrical wiring layouts for a multi-story residential complex using AutoCAD, including load distribution for individual units and common facility utilities.</p>
+        <div class="project-tags">
+          <span class="project-tag">AutoCAD</span>
+          <span class="project-tag">Load Analysis</span>
+          <span class="project-tag">Power Distribution</span>
+        </div>
+        <div class="project-slides">
+          <iframe src="https://docs.google.com/presentation/d/1QFRjus1808y_84gQmwIaG0OOit9usGvj/embed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
+          <a href="https://docs.google.com/presentation/d/1QFRjus1808y_84gQmwIaG0OOit9usGvj/edit?usp=sharing" target="_blank" class="slides-link">View full presentation ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">03</div>
+        <div class="project-title">Solar-Powered Hall Security Backup System</div>
+        <p class="project-desc">Designed a standalone solar-powered backup solution for Sohid Abu Sayed Hall, CUET — encompassing load profiling, solar array optimization, and energy storage dimensioning for CCTV and outdoor lighting.</p>
+        <div class="project-tags">
+          <span class="project-tag">PVsyst</span>
+          <span class="project-tag">Solar PV</span>
+          <span class="project-tag">ESS Design</span>
+        </div>
+        <div class="project-slides">
+          <iframe src="https://docs.google.com/presentation/d/18MCl3Vxzth7XUwRheQegYziYCF55VJ7M/embed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
+          <a href="https://docs.google.com/presentation/d/18MCl3Vxzth7XUwRheQegYziYCF55VJ7M/edit?usp=sharing" target="_blank" class="slides-link">View full presentation ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">04</div>
+        <div class="project-title">Digital Thermometer &amp; Voltmeter (PIC MCU)</div>
+        <p class="project-desc">Designed a digital thermometer and digital voltmeter using the PIC16F877A microcontroller with mikroC_PRO_PIC software, demonstrating embedded systems and sensor interfacing.</p>
+        <div class="project-tags">
+          <span class="project-tag">PIC16F877A</span>
+          <span class="project-tag">mikroC PRO PIC</span>
+          <span class="project-tag">Embedded Systems</span>
+        </div>
+        <div class="project-slides">
+          <iframe src="https://docs.google.com/presentation/d/17gr2z_aXI3bBcr27P6m--4M2LmONw2K2/embed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
+          <a href="https://docs.google.com/presentation/d/17gr2z_aXI3bBcr27P6m--4M2LmONw2K2/edit?usp=sharing" target="_blank" class="slides-link">View full presentation ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">05</div>
+        <div class="project-title">33/11 kV Power Transformer Design</div>
+        <p class="project-desc">Designed a Delta/Star 33/11 kV power transformer in MATLAB, applying core electrical machine design principles and simulation for performance validation.</p>
+        <div class="project-tags">
+          <span class="project-tag">MATLAB</span>
+          <span class="project-tag">Power Systems</span>
+          <span class="project-tag">Transformer Design</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">06</div>
+        <div class="project-title">AgBiS₂ Thin-Film Solar Cell Optimization</div>
+        <p class="project-desc">Investigated the optimization of device performance for an environmentally friendly AgBiS₂-based thin-film solar cell through theoretical analysis and SCAPS-1D simulation, focusing on improving photovoltaic efficiency while maintaining eco-friendly material composition. Supervised by Dr. Nipu Kumar Das, CUET.</p>
+        <div class="project-tags">
+          <span class="project-tag">SCAPS-1D</span>
+          <span class="project-tag">Thin-Film PV</span>
+          <span class="project-tag">Simulation</span>
+          <span class="project-tag">Thesis</span>
+        </div>
+        <div class="project-slides">
+          <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSeapyqfB9e9UNFK41UsoSP0sOaOqw8e4LeZB-MlOD9WDCMPagNYSw3ybgYr_Ta6lre0I2wT_4u3qYg/pubembed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
+          <a href="https://docs.google.com/presentation/d/e/2PACX-1vSeapyqfB9e9UNFK41UsoSP0sOaOqw8e4LeZB-MlOD9WDCMPagNYSw3ybgYr_Ta6lre0I2wT_4u3qYg/pubembed" target="_blank" class="slides-link">View full presentation ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-num">07</div>
+        <div class="project-title">Solar Energy System Design &amp; Financial Analysis</div>
+        <p class="project-desc">Modeled and optimized a 22.14 kWp grid-tied photovoltaic system using PVsyst. Included 3D near-shading analysis, tilt angle optimization (15°–20°), and financial modeling with complex revenue stream scenarios (PPA/FiT) to achieve payback period ≤7 years.</p>
+        <div class="project-tags">
+          <span class="project-tag">PVsyst</span>
+          <span class="project-tag">Grid-Tied PV</span>
+          <span class="project-tag">Financial Modeling</span>
+          <span class="project-tag">DIU Training</span>
+        </div>
+      </div>
+
+      <!-- THESIS CARD — full width -->
+      <div class="project-card thesis-card">
+        <div class="thesis-badge">Undergraduate Thesis</div>
+        <div class="project-title">Forecast-Integrated MPC for Hydropower Generation & Reservoir Management at Karnaphuli Hydropower Station</div>
+        <p class="project-desc">Developed a 4-module pipeline for the Karnaphuli Hydropower Station (240 MW): rainfall prediction (LightGBM Classifier + CatBoost Regressor), 7-day inflow forecasting (HistGradientBoosting + ExtraTrees Regressor + Ridge Meta-Learner + Residual BiLSTM), water head forecasting (Stacked GRU), and a rolling MPC optimizer (CVXPY, 5-unit commitment) to maximize generation and minimize spillway discharge.</p>
+        <p class="thesis-supervisor">Supervised by <strong>Dr. Nipu Kumar Das</strong> — Professor & Head, Dept. of BME, CUET</p>
+        <div class="project-tags">
+          <span class="project-tag">LightGBM</span>
+          <span class="project-tag">CatBoost</span>
+          <span class="project-tag">BiLSTM</span>
+          <span class="project-tag">Stacked GRU</span>
+          <span class="project-tag">MPC / CVXPY</span>
+          <span class="project-tag">Hydropower</span>
+          <span class="project-tag">Time Series</span>
+        </div>
+        <div class="project-slides">
+          <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQOv8KbW6tTxHs6dVYT_cmdYqaaZQbe9Zyf2JTfzbus7bxIYVHkXAoUdtepNo_sD9PH9FWsbBuVVlH0/pubembed?start=false&loop=false&delayms=3000" allowfullscreen></iframe>
+          <a href="https://docs.google.com/presentation/d/1SmRogutwVGrQ_vsHO7Y_L8mSe8W2RXZA/edit?usp=drive_link" target="_blank" class="slides-link">View full presentation ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .thesis-card {
+    grid-column: 1 / -1;
+    border-color: var(--accent) !important;
+    background: linear-gradient(135deg, #fff 60%, #f5f3ff) !important;
+    position: relative;
+  }
+  .thesis-card::before { opacity: 1 !important; }
+  .thesis-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 0.75rem;
+  }
+  .thesis-card .project-num {
+    color: var(--accent);
+    font-size: 1.4rem;
+  }
+  .thesis-card .project-title {
+    font-size: 1.15rem !important;
+  }
+  .thesis-supervisor {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text2);
+    margin: 0.75rem 0 1rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+  .thesis-supervisor strong { color: var(--text); }
+</style>
+
+<hr class="divider">
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="section-label">04 — Research</div>
+    <h2>Publications &amp; Research</h2>
+    <div class="research-list reveal">
+
+      <div class="research-empty">
+        <div class="research-empty-icon">📄</div>
+        <div class="research-empty-text">Publications coming soon</div>
+        <div class="research-empty-sub">Currently preparing manuscripts for journal submission.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .project-slides {
+    margin-top: 1.2rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .project-slides iframe {
+    width: 100%;
+    height: 320px;
+    border: none;
+    display: block;
+  }
+  .slides-link {
+    display: block;
+    text-align: center;
+    padding: 0.5rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-decoration: none;
+    background: var(--bg2);
+    transition: background 0.2s;
+  }
+  .slides-link:hover { background: var(--bg3); }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: var(--surface);
+    border: 1.5px dashed var(--border);
+    border-radius: 16px;
+    text-align: center;
+  }
+  .research-empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
+  .research-empty-text { font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text2); margin-bottom: 0.3rem; }
+  .research-empty-sub { font-family: 'Lato', sans-serif; font-size: 0.82rem; color: var(--text3); }
+</style>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">05 — Education</div>
+    <h2>Academic Background</h2>
+    <div class="edu-timeline reveal">
+
+      <div class="edu-item">
+        <div class="edu-year">March 2022 — June 2026</div>
+        <div class="edu-degree">B.Sc. in Electrical &amp; Electronic Engineering</div>
+        <div class="edu-school">Chittagong University of Engineering and Technology (CUET)</div>
+        <span class="edu-gpa">CGPA: 3.37 / 4.00</span>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">2020</div>
+        <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
+        <div class="edu-school">Govt. Haji Muhammad Mohsin College, Chattogram</div>
+        <span class="edu-gpa">GPA: 5.00 / 5.00</span>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">2018</div>
+        <div class="edu-degree">Secondary School Certificate (SSC)</div>
+        <div class="edu-school">Chittagong Govt. High School</div>
+        <span class="edu-gpa">GPA: 5.00 / 5.00</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+
+  <!-- Hero banner -->
+  <div class="contact-hero">
+    <div class="contact-hero-bg"></div>
+    <div class="contact-hero-content reveal">
+      <div class="section-label" style="justify-content:center;">06 — Contact</div>
+      <h2 style="text-align:center; margin-bottom:1rem;">Get in Touch</h2>
+
+    </div>
+  </div>
+
+  <!-- Cards grid -->
+  <div class="container" style="padding-top:3rem; padding-bottom:5rem;">
+
+    <div class="contact-cards reveal">
+
+      <!-- Email -->
+      <a href="mailto:omarabdullah.eee@gmail.com" class="ccard ccard--email">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m2 7 10 7 10-7"/>
+          </svg>
+        </div>
+        <div class="ccard-label">Email</div>
+        <div class="ccard-value">omarabdullah.eee@gmail.com</div>
+        <div class="ccard-action">Send a message →</div>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://linkedin.com/in/Omar-Abdullah" target="_blank" class="ccard ccard--linkedin">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </div>
+        <div class="ccard-label">LinkedIn</div>
+        <div class="ccard-value">Omar Abdullah</div>
+        <div class="ccard-action">View profile →</div>
+      </a>
+
+      <!-- GitHub -->
+      <a href="https://github.com/omar-abdullah-eee" target="_blank" class="ccard ccard--github">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.379.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+          </svg>
+        </div>
+        <div class="ccard-label">GitHub</div>
+        <div class="ccard-value">omar-abdullah-eee</div>
+        <div class="ccard-action">View repositories →</div>
+      </a>
+
+      <!-- Phone 1 -->
+      <a href="tel:+8801887757408" class="ccard ccard--phone">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.55 5.55l.96-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div class="ccard-label">Phone · Primary</div>
+        <div class="ccard-value">+880 1887 757408</div>
+        <div class="ccard-action">Call now →</div>
+      </a>
+
+      <!-- Phone 2 -->
+      <a href="tel:+8801575854838" class="ccard ccard--phone2">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 5.55 5.55l.96-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+        </div>
+        <div class="ccard-label">Phone · Secondary</div>
+        <div class="ccard-value">+880 1575 854838</div>
+        <div class="ccard-action">Call now →</div>
+      </a>
+
+      <!-- Location -->
+      <div class="ccard ccard--location">
+        <div class="ccard-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div class="ccard-label">Location</div>
+        <div class="ccard-value">Chattogram, Bangladesh</div>
+        <div class="ccard-action">82 J.I. Madrasha Road, Dampara</div>
+      </div>
+
+    </div>
+
+    <!-- Bottom CTA strip -->
+    <div class="contact-cta-strip reveal">
+      <div class="cta-strip-text">
+        <div class="cta-strip-heading">Available for opportunities</div>
+        <div class="cta-strip-sub">CUET EEE Graduate · Open to research, grad school & engineering roles</div>
+      </div>
+      <a href="mailto:omarabdullah.eee@gmail.com" class="btn btn-primary" style="white-space:nowrap;">Send Email →</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ── CONTACT HERO ── */
+  .contact-hero {
+    position: relative;
+    padding: 6rem 4rem 4rem;
+    overflow: hidden;
+    text-align: center;
+  }
+  .contact-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(91,71,224,0.07), transparent 70%);
+    pointer-events: none;
+  }
+  .contact-hero h2 {
+    margin-bottom: 1rem;
+  }
+  .contact-hero-sub {
+    color: var(--text2);
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* ── CARDS GRID ── */
+  .contact-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .ccard {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .ccard::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: 16px;
+  }
+  .ccard:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(100,90,70,0.10); }
+
+  /* per-card accent colours */
+  .ccard--email   { --cc: #5b47e0; }
+  .ccard--linkedin{ --cc: #0a9689; }
+  .ccard--github  { --cc: #7c5cbf; }
+  .ccard--phone   { --cc: #c0620a; }
+  .ccard--phone2  { --cc: #c0620a; }
+  .ccard--location{ --cc: #c0285a; cursor: default; }
+
+  .ccard:hover { border-color: var(--cc); }
+  .ccard:hover::after { background: radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--cc) 8%, transparent), transparent); opacity: 1; }
+
+  .ccard-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--cc) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--cc) 25%, transparent);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cc);
+    margin-bottom: 0.5rem;
+    transition: background 0.3s;
+  }
+  .ccard:hover .ccard-icon { background: color-mix(in srgb, var(--cc) 20%, transparent); }
+  .ccard-icon svg { width: 20px; height: 20px; }
+
+  .ccard-label {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--cc);
+    text-transform: uppercase;
+  }
+  .ccard-value {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .ccard-action {
+    font-size: 0.78rem;
+    color: var(--text3);
+    margin-top: 0.25rem;
+    transition: color 0.2s;
+  }
+  .ccard:hover .ccard-action { color: var(--cc); }
+
+  /* ── CTA STRIP ── */
+  .contact-cta-strip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-cta-strip::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    border-radius: 3px 0 0 3px;
+  }
+  .cta-strip-heading {
+    font-family: 'Cormorant', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+  .cta-strip-sub {
+    font-size: 0.85rem;
+    color: var(--text2);
+  }
+
+  @media (max-width: 900px) {
+    .contact-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .contact-cards { grid-template-columns: 1fr; }
+    .contact-hero { padding: 5rem 1.5rem 3rem; }
+    .contact-cta-strip { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<!-- FOOTER -->
+<footer>
+  Designed &amp; built by <span>Omar Abdullah</span> · CUET EEE Class of 2026 · Chattogram, Bangladesh
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => revealObserver.observe(r));
+
+  // Active nav: highlight + underline as you scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  function updateNav() {
+    let current = '';
+    const scrollY = window.scrollY + window.innerHeight / 3;
+    sections.forEach(s => {
+      if (scrollY >= s.offsetTop) current = s.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  }
+
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav(); // run on load
+
+  // Smooth scroll on click
+  navLinks.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
